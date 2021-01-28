@@ -40,7 +40,7 @@ class MovieHorizontal extends StatelessWidget {
   }
 
 Widget _tarjeta(BuildContext context, Pelicula pelicula){
-  return Container(
+  final tarjeta= Container(
         margin: EdgeInsets.only(right: 15.0),
         child: Column(children: <Widget>[
           ClipRRect(
@@ -63,8 +63,18 @@ Widget _tarjeta(BuildContext context, Pelicula pelicula){
 
       );
 
+      return GestureDetector(
+        child: tarjeta, 
+        onTap:(){
+          // PushNamed permite enviar argumentos mediate la función, de acurdo a la ruta defiida en main.dart
+          Navigator.pushNamed(context, 'detalle', arguments: pelicula);
+          
+        }
+      );
+
 }
-  List<Widget> _tarjetas(BuildContext context){
+// no se esta usando pero queda como referencia
+ /* List<Widget> _tarjetas(BuildContext context){
 
     return peliculas.map((pelicula){
 
@@ -93,5 +103,5 @@ Widget _tarjeta(BuildContext context, Pelicula pelicula){
       );
     
     }).toList();
-  }
+  }*/
 }

@@ -82,6 +82,17 @@ class Pelicula {
     }
 
 
+    getBackgroundImage(){
+
+      if ( posterPath == null ){
+        return 'https://i1.wp.com/www.musicapopular.cult.cu/wp-content/uploads/2017/12/imagen-no-disponible.png?fit=600%2C450';
+      }else{
+        return 'https://image.tmdb.org/t/p/w500/$backdropPath';
+      }
+   
+    }
+
+
 }
 
 
