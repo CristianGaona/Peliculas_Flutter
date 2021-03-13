@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:peliculas/src/models/actores_model.dart';
 import 'package:peliculas/src/models/pelicula_model.dart';
+import 'package:peliculas/src/providers/peliculas_provider.dart';
 
 class PeliculaDetalle extends StatelessWidget {
 
@@ -21,15 +23,7 @@ class PeliculaDetalle extends StatelessWidget {
                 _descripcion(pelicula),
                 _descripcion(pelicula),
                 _descripcion(pelicula),
-                _descripcion(pelicula),
-                _descripcion(pelicula),
-                _descripcion(pelicula),
-                _descripcion(pelicula),
-                _descripcion(pelicula),
-                _descripcion(pelicula),
-                _descripcion(pelicula),
-                _descripcion(pelicula),
-                _descripcion(pelicula)
+                _crearCasting( pelicula )
 
               ]
             )
@@ -58,7 +52,7 @@ class PeliculaDetalle extends StatelessWidget {
           
           image: NetworkImage(pelicula.getBackgroundImage()),
           placeholder: AssetImage('assets/img/loading.gif'),
-          fadeInDuration: Duration(microseconds: 150),
+         // fadeInDuration: Duration(microseconds: 150),
           fit: BoxFit.cover,
           
         
@@ -83,11 +77,14 @@ class PeliculaDetalle extends StatelessWidget {
          Flexible(
            child: Column(
              children: <Widget>[
+               // ignore: deprecated_member_use
                Text(pelicula.title, style: Theme.of(context).textTheme.title, overflow: TextOverflow.ellipsis),
+               // ignore: deprecated_member_use
                Text(pelicula.originalTitle, style: Theme.of(context).textTheme.subhead, overflow: TextOverflow.ellipsis),
                Row(
                  children:<Widget>[
                    Icon(Icons.star_border),
+                   // ignore: deprecated_member_use
                    Text(pelicula.voteAverage.toString(), style: Theme.of(context).textTheme.subhead)
                  ]
                )
@@ -97,6 +94,7 @@ class PeliculaDetalle extends StatelessWidget {
      ),
      );
  }
+ 
  Widget _descripcion(Pelicula pelicula){
    return Container(
      padding: EdgeInsets.symmetric(horizontal:10.0, vertical:20.0),
@@ -106,5 +104,60 @@ class PeliculaDetalle extends StatelessWidget {
      ),
      
      );
+ }
+
+ Widget _crearCasting( Pelicula pelicula) {
+   final peliProvider = new PeliculasProvider();
+
+   return FutureBuilder(
+     future:  peliProvider.getCast(pelicula.id.toString()),
+     builder: (BuildContext context, AsyncSnapshot<List> snapshot){
+      if (snapshot.hasData){
+        return _crearActoresPageView( snapshot.data);
+      }else{
+        return Center(child: CircularProgressIndicator());
+      }
+     },
+   );
+ }
+ // Crear PageBuiilder
+ Widget _crearActoresPageView(List<Actor> actores){
+   return SizedBox(
+     height: 400.0,
+     child: PageView.builder(
+       pageSnapping: false,
+       itemBuilder: ( context, i)=>_actorTarjeta( actores[i]),
+       controller:  PageController(
+         viewportFraction: 0.3,
+         initialPage: 1),
+       itemCount: actores.length,
+       ) ,
+     );
+
+ }
+
+ //Tarjeta para cada actor en particular
+ Widget _actorTarjeta( Actor actor){
+   return Container(
+     child: Column(
+       children:<Widget> [
+         ClipRRect(
+           borderRadius: BorderRadius.circular(20.0),
+             child: FadeInImage(
+             placeholder: AssetImage ('assets/img/no-image.jpg'),
+             height: 300.0,
+             fit: BoxFit.cover,
+             image: NetworkImage( actor.getFoto())
+             ),
+         ),
+         Text(actor.name,
+         overflow: TextOverflow.ellipsis
+         )
+       ],
+
+
+     )
+   );
+
  }
 }
