@@ -65,7 +65,7 @@ class Actor {
   getFoto(){
 
       if ( profilePath == null ){
-        return 'https://icons-for-free.com/iconfiles/png/512/avatar+circle+male+profile+user+icon-1320196710301016992.png';
+        return 'https://mesreg.com/image/avatar/user-small-icon.png';
       }else{
         return 'https://image.tmdb.org/t/p/w500/$profilePath';
       }

@@ -48,6 +48,7 @@ class PeliculaDetalle extends StatelessWidget {
           pelicula.title,
           style: TextStyle(color: Colors.white, fontSize: 16.0),
         ),
+        
         background: FadeInImage(
           
           image: NetworkImage(pelicula.getBackgroundImage()),
@@ -83,9 +84,10 @@ class PeliculaDetalle extends StatelessWidget {
              crossAxisAlignment:  CrossAxisAlignment.start,
              children: <Widget>[
                // ignore: deprecated_member_use
-               Text(pelicula.title, style: Theme.of(context).textTheme.title, overflow: TextOverflow.ellipsis),
+               Text(pelicula.title, style: Theme.of(context).textTheme.headline3, overflow: TextOverflow.ellipsis),
                // ignore: deprecated_member_use
-               Text(pelicula.originalTitle, style: Theme.of(context).textTheme.subhead, overflow: TextOverflow.ellipsis),
+               Text(pelicula.originalTitle, style: Theme.of(context).textTheme.headline5, overflow: TextOverflow.ellipsis),
+               Text(pelicula.releaseDate, style: Theme.of(context).textTheme.headline6, overflow: TextOverflow.ellipsis),
                Row(
                  children:<Widget>[
                    Icon(Icons.star_border),
